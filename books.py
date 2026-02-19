@@ -1,19 +1,17 @@
-class Livros:
-    def __init__(self, autor, nomeLivro,  genero, anoPublicação):
+class Biblioteca:
+    def __init__(self, autor, nomeLivro, genero, anoPublicacao):
         self.autor = autor
-        self.nome = nomeLivro
+        self.nomeLivro = nomeLivro
         self.genero = genero
-        self.anoPublicação = anoPublicação
-        self.__livrosDentro = []
+        self.anoPublicacao = anoPublicacao
+        self.__quantidadeLivros = []
 
-    def registrarLivro(self):
-        self.__livrosDentro.append([autor, nome, genero, ano_publicacao])
-        print('Livro registrado com sucesso')
+    def registrarLivro(self, autor, nomeLivro, genero, anoPublicacao):
+        livro = {
+            'nome': nomeLivro,
+            'genero': genero,
+            'autor': autor,
+            'anoPublicacao': anoPublicacao
+        }
+        self.__quantidadeLivros.append(livro)
 
-autor = input('Digite o nome do autor: ')
-nome = input('Digite o nome do livro: ')
-genero = input('Digite o genero do livro: ')
-ano_publicacao = int(input('Digite o ano de publicação: '))
-
-livro = Livros(autor, nome, genero, ano_publicacao)
-livro.registrarLivro()
