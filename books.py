@@ -5,6 +5,9 @@ class Livro:
         self.autor = autor
         self.data = data
 
+    def __str__(self):
+        return f'{self.nome} - {self.genero} - {self.autor} - ({self.data})'
+
 biblioteca = []
 
 def registarLivro():
@@ -17,4 +20,7 @@ def registarLivro():
 
     biblioteca.append(livro)
 
-registarLivro()
+def verLivros():
+    print('Atualmente temos os seguintes livros: ')
+    for i, livros in enumerate(biblioteca, start=1):
+        print(f'-{i} {livros}')
