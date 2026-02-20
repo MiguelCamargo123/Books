@@ -34,21 +34,26 @@ pergunta = input('Você deseja entrar em nossa biblioteca? (S/N) ').upper()
 
 while pergunta == 'S':
     print()
-    oqueFazer = input('Você deseja [R]egistrar um livro, [V]er os livros? ').upper()
+    oqueFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro? ').upper()
 
     if oqueFazer == 'R':
         try:
             print()
             registarLivro()
             print('Livro registrado com sucesso!')
+            print()
         except ValueError:
             print()
             print('Por favor, digite um ano, não um texto')
+            print()
 
     if oqueFazer == 'V':
         print()
         verLivros()
+        print()
 
     if oqueFazer == 'E':
+        print()
         emprestimo = int(input('Digite o indice do livro: '))
         emprestar(emprestimo)
+        print('livro emprestado com sucesso')
