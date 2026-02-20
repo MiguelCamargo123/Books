@@ -22,8 +22,13 @@ def registarLivro():
 
 def verLivros():
     print('Atualmente temos os seguintes livros: ')
-    for i, livros in enumerate(biblioteca, start=1):
-        print(f'-{i} {livros}')
+    for i, livros in enumerate(biblioteca, start=0):
+        print(f'indice: -{i} {livros}')
+
+def emprestar(indice):
+    if indice in range(len(biblioteca)):
+        biblioteca.pop(indice)
+        print('Livro emprestado com sucesso!')
 
 pergunta = input('Você deseja entrar em nossa biblioteca? (S/N) ').upper()
 
@@ -43,3 +48,7 @@ while pergunta == 'S':
     if oqueFazer == 'V':
         print()
         verLivros()
+
+    if oqueFazer == 'E':
+        emprestimo = int(input('Digite o indice do livro: '))
+        emprestar(emprestimo)
