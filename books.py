@@ -40,6 +40,15 @@ def livrosEmprestados():
     for i, emprestado in enumerate(emprestados):
         print(f'indice: -{i} {emprestado}')
 
+def devolverLivro(indice):
+    if indice in range(len(emprestados)):
+        devolvido = emprestados.pop(indice)
+        biblioteca.append(devolvido)
+        print('Livro devolvido com sucesso!')
+    else:
+        print('Índice inválido!')
+
+
 pergunta = input('Você deseja entrar em nossa biblioteca? (S/N) ').upper()
 
 while pergunta == 'S':
