@@ -9,6 +9,7 @@ class Livro:
         return f'{self.nome} - {self.genero} - {self.autor} - ({self.data})'
 
 biblioteca = []
+emprestados = []
 
 def registarLivro():
     nome = input('Nome do livro: ')
@@ -27,14 +28,23 @@ def verLivros():
 
 def emprestar(indice):
     if indice in range(len(biblioteca)):
-        biblioteca.pop(indice)
-        print('Livro emprestado com sucesso!')
+        if len(emprestados) < 3:
+            livro = biblioteca.pop(indice)
+            emprestados.append(livro)
+            print('Livro emprestado com sucesso!')
+        else:
+            print('Você tem três livros emprestados, devolva um e você podera pegar outro')
+
+def livrosEmprestados():
+    print('Atualmente você pegou os seguintes livros emprestados: ')
+    for i, emprestado in enumerate(emprestados):
+        print(f'indice: -{i} {emprestado}')
 
 pergunta = input('Você deseja entrar em nossa biblioteca? (S/N) ').upper()
 
 while pergunta == 'S':
     print()
-    oqueFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro? ').upper()
+    oqueFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [P]egar emprestado um livro, [S]aber quantos livros foram pegos emprestado? ').upper()
 
     if oqueFazer == 'R':
         try:
@@ -52,8 +62,11 @@ while pergunta == 'S':
         verLivros()
         print()
 
-    if oqueFazer == 'E':
+    if oqueFazer == 'P':
         print()
         emprestimo = int(input('Digite o indice do livro: '))
         emprestar(emprestimo)
-        print('livro emprestado com sucesso')
+
+    if oqueFazer == 'P':
+        print()
+        livrosEmprestados()
