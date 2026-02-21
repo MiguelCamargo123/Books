@@ -51,13 +51,8 @@ def devolverLivro(indice):
 
 def main():
     while True:
-        pergunta = input('Você deseja sair de nosso sistema? (S/N) ').upper()
-
-        if pergunta == 'S':
-            break
-
         print()
-        desejaFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro, [O]lhar quais livros emprestados ou [D]evolver um livro?').upper()
+        desejaFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro, [O]lhar quais livros emprestados ou [D]evolver um livro? ').upper()
 
         if desejaFazer == 'R':
             print()
@@ -91,6 +86,7 @@ def main():
             except ValueError:
                 print('Digite o indice do livro, não um texto')
 
+        print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
         if pergunta != 'S':
             break
