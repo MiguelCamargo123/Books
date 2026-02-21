@@ -49,33 +49,47 @@ def devolverLivro(indice):
         print('Índice inválido!')
 
 
-pergunta = input('Você deseja entrar em nossa biblioteca? (S/N) ').upper()
+def main():
+    while True:
+        pergunta = input('Você deseja sair de nosso sistema? (S/N) ').upper()
 
-while pergunta == 'S':
-    print()
-    oqueFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [P]egar emprestado um livro, [S]aber quantos livros foram pegos emprestado? ').upper()
+        if pergunta == 'S':
+            break
 
-    if oqueFazer == 'R':
-        try:
+        desejaFazer = input('Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro, [O]lhar quais livros emprestados ou [D]evolver um livro?').upper()
+
+        if desejaFazer == 'R':
             print()
-            registarLivro()
-            print('Livro registrado com sucesso!')
-            print()
-        except ValueError:
-            print()
-            print('Por favor, digite um ano, não um texto')
-            print()
+            try:
+                registarLivro()
+                print('livro registrado com sucesso!')
+            except ValueError:
+                print('Digite o ano de publicação do livro, não um texto')
 
-    if oqueFazer == 'V':
-        print()
-        verLivros()
-        print()
+        elif desejaFazer == 'V':
+            print()
+            verLivros()
+        
+        elif desejaFazer == 'E':
+            print()
+            try:
+                emprestimo = int(input('Digite o indice do livro que você deseja pegar emprestado: '))
+                emprestar(emprestimo)
+            except ValueError:
+                print('Digite o indice do livro, não um texto')
 
-    if oqueFazer == 'P':
-        print()
-        emprestimo = int(input('Digite o indice do livro: '))
-        emprestar(emprestimo)
+        elif desejaFazer == 'O':
+            print()
+            livrosEmprestados()
+        
+        elif desejaFazer == 'D':
+            print()
+            try:
+                indiceDevolver = int(input('Digite o indice do livro que você deseja devolver: '))
+                devolverLivro(indiceDevolver)
+            except ValueError:
+                print('Digite o indice do livro, não um texto')
 
-    if oqueFazer == 'P':
-        print()
-        livrosEmprestados()
+
+if __name__ == '__main__':
+    main()
