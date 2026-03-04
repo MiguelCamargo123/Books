@@ -120,7 +120,7 @@ def main():
 
     while True:
         oque_fazer = input(
-            'Você deseja [R]egistrar um livro? [V]er os livros disponiveis? [E]mprestar um livro? [Q]auis livros você pegou emprestado? [D]evolver um livro?'
+            'Você deseja [R]egistrar um livro? [V]er os livros disponiveis? [E]mprestar um livro? [Q]auis livros você pegou emprestado? [D]evolver um livro? '
         ).upper()
 
         if oque_fazer == 'R':
