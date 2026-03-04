@@ -149,6 +149,16 @@ def main():
                     'Digite o indice do livro que deseja pegar emprestado, não um texto!!!'
                 )
 
+        elif oque_fazer == 'Q':
+            biblioteca.livrosEmprestados()
+
+        elif oque_fazer == 'D':
+            indice2 = int(input('Digite o indice do livro que voce deseja devolver: '))
+            try:
+                biblioteca.devolverLivro(indice2)
+            except ValueError:
+                print('Digite um indice, não um texto!!!')
+
         print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
         if pergunta != 'S':
