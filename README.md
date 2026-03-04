@@ -3,10 +3,12 @@
 A CLI-based Library Management System built with Python.
 
 This project was developed to practice:
+
 - Object-Oriented Programming (OOP)
 - Code structure and organization
 - Input validation
 - Clean logic implementation
+- NoSQL data persistence (JSON)
 
 ---
 
@@ -16,17 +18,20 @@ This project was developed to practice:
 - List available books
 - Lend books
 - Track borrowed books
-- Index validation for lending operations
+- Return borrowed books
+- Index validation for lending and returning operations
+- **Data persistence with JSON** — all data is saved and restored between sessions
 
 ---
 
 ## 🛠 Technologies
 
 - Python 3
+- JSON (built-in)
 
 ---
 
-## ▶ How to Run
+## ▶️ How to Run
 
 1. Clone the repository:
 
@@ -46,8 +51,23 @@ cd Books
 python books.py
 ```
 
+---
+
 ## 📦 Version
 
-Current version: v1.0.0
+### v1.1.0 *(current)*
+- Added full data persistence using JSON files (`biblioteca.json` and `emprestados.json`)
+- Refactored save logic into a single `_salvar_json()` helper method
+- Fixed `devolverLivro` not updating JSON on return
+- Code cleanup and deduplication
 
-This version represents the first complete and stable implementation of the system.
+### v1.0.0
+- First complete and stable implementation of the system
+- OOP structure with `Livro` and `Biblioteca` classes
+- CLI menu with input validation
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
