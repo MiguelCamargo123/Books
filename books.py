@@ -16,13 +16,32 @@ class Biblioteca:
     def __init__(self):
         self.disponiveis = []
         self.emprestados = []
+        self._carregar_json()
 
-    def registarLivro(self):
-        nome = input('Nome do livro: ')
-        genero = input('Genero do livro: ')
-        autor = input('Autor do livro: ')
-        anoPublicado = int(input('Ano de publicação: '))
+    def _carregar_json(self):
+        try:
+            with open('biblioteca.json', 'r', encoding='utf-8') as f:
+                dados = json.load(f)
+                for d in dados:
+                    livro = Livro(
+                        d['nome'], d['genero'], d['autor'], d['ano de publicação']
+                    )
+                    self.disponiveis.append(livro)
+        except FileNotFoundError:
+            pass
 
+        try:
+            with open('emprestados.json', 'r', encoding='utf-8') as f:
+                dados_emprestimo = json.load(f)
+                for d in dados_emprestimo:
+                    livro_emprestimo = Livro(
+                        d['nome'], d['genero'], d['autor'], d['ano de publicação']
+                    )
+                    self.emprestados.append(livro_emprestimo)
+        except FileNotFoundError:
+            pass
+
+    def registarLivro(self, nome, genero, autor, anoPublicado):
         livro = Livro(nome, genero, autor, anoPublicado)
 
         self.disponiveis.append(livro)
@@ -97,47 +116,16 @@ class Biblioteca:
 
 
 def main():
+    biblioteca = Biblioteca()
+
     while True:
-        print()
-        desejaFazer = input(
-            'Você deseja [R]egistrar um livro, [V]er os livros, [E]mprestar um livro, [O]lhar quais livros emprestados ou [D]evolver um livro? '
+        oque_fazer = input(
+            'Você deseja [R]egistrar um livro? [V]er os livros disponiveis? [E]mprestar um livro? [Q]auis livros você pegou emprestado? [D]evolver um livro?'
         ).upper()
 
-        if desejaFazer == 'R':
-            print()
-            try:
-                # registarLivro()
-                print('livro registrado com sucesso!')
-            except ValueError:
-                print('Digite o ano de publicação do livro, não um texto')
-
-        elif desejaFazer == 'V':
-            print()
-            # verLivros()
-
-        elif desejaFazer == 'E':
-            print()
-            # try:
-            # emprestimo = int(
-            # input('Digite o indice do livro que você deseja pegar emprestado: ')
-            # )
-            # emprestar(emprestimo)
-            # except ValueError:
-            # print('Digite o indice do livro, não um texto')
-
-        elif desejaFazer == 'O':
-            print()
-            # livrosEmprestados()
-
-        elif desejaFazer == 'D':
-            print()
-            # try:
-            #     indiceDevolver = int(
-            #         input('Digite o indice do livro que você deseja devolver: ')
-            #     )
-            #     devolverLivro(indiceDevolver)
-            # except ValueError:
-            #     print('Digite o indice do livro, não um texto')
+        if oque_fazer == 'R':
+            nome = input('Digite o nome do livro: ')
+            genero = input('Digite o genero do livro: ')
 
         print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
