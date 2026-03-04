@@ -41,22 +41,43 @@ class Biblioteca:
         except FileNotFoundError:
             pass
 
+    def _salvar_json(self):
+        with open('biblioteca.json', 'w', encoding='utf-8') as f:
+            json.dump(
+                [
+                    {
+                        'nome': l.nome,
+                        'genero': l.genero,
+                        'autor': l.autor,
+                        'ano de publicação': l.data,
+                    }
+                    for l in self.disponiveis
+                ],
+                f,
+                ensure_ascii=False,
+                indent=4,
+            )
+
+        with open('emprestados.json', 'w', encoding='utf-8') as f:
+            json.dump(
+                [
+                    {
+                        'nome': l.nome,
+                        'genero': l.genero,
+                        'autor': l.autor,
+                        'ano de publicação': l.data,
+                    }
+                    for l in self.emprestados
+                ],
+                f,
+                ensure_ascii=False,
+                indent=4,
+            )
+
     def registarLivro(self, nome, genero, autor, anoPublicado):
         livro = Livro(nome, genero, autor, anoPublicado)
-
         self.disponiveis.append(livro)
-        livros_nosDisponiveis = [
-            {
-                'nome': livro.nome,
-                'genero': livro.genero,
-                'autor': livro.autor,
-                'ano de publicação': anoPublicado,
-            }
-            for l in self.disponiveis
-        ]
-
-        with open('biblioteca.json', 'w', encoding='utf-8') as f:
-            json.dump(livros_nosDisponiveis, f, ensure_ascii=False, indent=4)
+        self._salvar_json()
 
     def verLivros(self):
         print('Atualmente temos os seguintes livros: ')
@@ -69,33 +90,7 @@ class Biblioteca:
                 livro = self.disponiveis.pop(indice)
                 self.emprestados.append(livro)
                 print('Livro emprestado com sucesso!')
-
-                # Salva lista de emprestados no JSON
-                livros_nosEmprestados = [
-                    {
-                        'nome': l.nome,
-                        'genero': l.genero,
-                        'autor': l.autor,
-                        'ano de publicação': l.data,
-                    }
-                    for l in self.emprestados
-                ]
-                with open('emprestados.json', 'w', encoding='utf-8') as f:
-                    json.dump(livros_nosEmprestados, f, ensure_ascii=False, indent=4)
-
-                # Atualiza o JSON de disponíveis também (livro saiu da lista!)
-                livros_nosDisponiveis = [
-                    {
-                        'nome': l.nome,
-                        'genero': l.genero,
-                        'autor': l.autor,
-                        'ano de publicação': l.data,
-                    }
-                    for l in self.disponiveis
-                ]
-                with open('biblioteca.json', 'w', encoding='utf-8') as f:
-                    json.dump(livros_nosDisponiveis, f, ensure_ascii=False, indent=4)
-
+                self._salvar_json()
             else:
                 print(
                     'Você tem três livros emprestados, devolva um e você poderá pegar outro'
@@ -111,6 +106,7 @@ class Biblioteca:
             devolvido = self.emprestados.pop(indice)
             self.disponiveis.append(devolvido)
             print('Livro devolvido com sucesso!')
+            self._salvar_json()
         else:
             print('Índice inválido!')
 
