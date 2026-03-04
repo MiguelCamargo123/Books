@@ -126,6 +126,28 @@ def main():
         if oque_fazer == 'R':
             nome = input('Digite o nome do livro: ')
             genero = input('Digite o genero do livro: ')
+            autor = input('Digite o nome do autor do livro: ')
+            anoPublicado = int(input('Digite o ano de publicação do livro: '))
+
+            try:
+                biblioteca.registarLivro(nome, genero, autor, anoPublicado)
+                print('Livro registrado com sucesso')
+            except ValueError:
+                print('Digite o ano de publicação, não um texto!!!')
+
+        elif oque_fazer == 'V':
+            biblioteca.verLivros()
+
+        elif oque_fazer == 'E':
+            indice = int(
+                input('Digite o indice do livro que deseja pegar emprestado: ')
+            )
+            try:
+                biblioteca.emprestar(indice)
+            except ValueError:
+                print(
+                    'Digite o indice do livro que deseja pegar emprestado, não um texto!!!'
+                )
 
         print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
