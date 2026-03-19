@@ -85,16 +85,21 @@ class Biblioteca:
             print(f'indice: -{i} {livros}')
 
     def emprestar(self, indice):
-        if indice in range(len(self.disponiveis)):
-            if len(self.emprestados) < 3:
-                livro = self.disponiveis.pop(indice)
-                self.emprestados.append(livro)
-                print('Livro emprestado com sucesso!')
-                self._salvar_json()
-            else:
-                print(
-                    'Você tem três livros emprestados, devolva um e você poderá pegar outro'
-                )
+        if range(len(self.disponiveis)) > 0:
+            if indice in range(len(self.disponiveis)):
+                if len(self.emprestados) < 3:
+                    livro = self.disponiveis.pop(indice)
+                    self.emprestados.append(livro)
+                    print('Livro emprestado com sucesso!')
+                    self._salvar_json()
+                else:
+                    print(
+                        'Você tem três livros emprestados, devolva um e você poderá pegar outro'
+                    )
+        else:
+            print(
+                'Você não registrou nenhum livro para emprestar ainda, tente registrar um!!'
+            )
 
     def livrosEmprestados(self):
         print('Atualmente você pegou os seguintes livros emprestados: ')
@@ -102,13 +107,33 @@ class Biblioteca:
             print(f'indice: -{i} {emprestado}')
 
     def devolverLivro(self, indice):
-        if indice in range(len(self.emprestados)):
-            devolvido = self.emprestados.pop(indice)
-            self.disponiveis.append(devolvido)
-            print('Livro devolvido com sucesso!')
-            self._salvar_json()
+        if range(len(self.emprestados)) > 0:
+            if indice in range(len(self.emprestados)):
+                devolvido = self.emprestados.pop(indice)
+                self.disponiveis.append(devolvido)
+                print('Livro devolvido com sucesso!')
+                self._salvar_json()
+            else:
+                print('Índice inválido!')
         else:
-            print('Índice inválido!')
+            print(
+                'Você não pegou nenhum livro emprestdo ainda, tente pegar um primeiro'
+            )
+
+    def removerLivro(self, indice):
+        if range(len(self.disponiveis)) > 0:
+            if indice in range(len(self.disponiveis)):
+                self.disponiveis.pop(indice)
+                print('Livro removido com sucesso!!')
+                self._salvar_json()
+            else:
+                print(
+                    'Digite um indice valido, se você não sabe digite V para ver os livros e os indices'
+                )
+        else:
+            print(
+                'Ainda não tem livros disponiveis para remover, tente adicionar um antes!!!'
+            )
 
 
 def main():
