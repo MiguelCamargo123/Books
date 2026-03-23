@@ -81,59 +81,45 @@ class Biblioteca:
 
     def verLivros(self):
         print('Atualmente temos os seguintes livros: ')
-        for i, livros in enumerate(self.disponiveis, start=0):
-            print(f'indice: -{i} {livros}')
+        for disponiveis in self.disponiveis:
+            print(disponiveis)
 
-    def emprestar(self, indice):
-        if range(len(self.disponiveis)) > 0:
-            if indice in range(len(self.disponiveis)):
+    def emprestar(self, nome):
+        for livro in self.disponiveis:
+            if livro.nome.lower() == nome.lower():
                 if len(self.emprestados) < 3:
-                    livro = self.disponiveis.pop(indice)
+                    self.disponiveis.remove(livro)
                     self.emprestados.append(livro)
                     print('Livro emprestado com sucesso!')
-                    self._salvar_json()
                 else:
-                    print(
-                        'Você tem três livros emprestados, devolva um e você poderá pegar outro'
-                    )
-        else:
-            print(
-                'Você não registrou nenhum livro para emprestar ainda, tente registrar um!!'
-            )
+                    print('Você já pegou 3 livros, se quiser pegar mais um devolva um!')
+            return
+        print('Livro não encontrado!')
 
     def livrosEmprestados(self):
         print('Atualmente você pegou os seguintes livros emprestados: ')
-        for i, emprestado in enumerate(self.emprestados):
-            print(f'indice: -{i} {emprestado}')
+        for emprestados in self.emprestados:
+            print(emprestados)
 
-    def devolverLivro(self, indice):
-        if range(len(self.emprestados)) > 0:
-            if indice in range(len(self.emprestados)):
-                devolvido = self.emprestados.pop(indice)
-                self.disponiveis.append(devolvido)
-                print('Livro devolvido com sucesso!')
-                self._salvar_json()
-            else:
-                print('Índice inválido!')
-        else:
-            print(
-                'Você não pegou nenhum livro emprestdo ainda, tente pegar um primeiro'
-            )
-
-    def removerLivro(self, indice):
-        if range(len(self.disponiveis)) > 0:
-            if indice in range(len(self.disponiveis)):
-                self.disponiveis.pop(indice)
+    def devolverLivro(self, nome):
+        for livro in self.emprestados:
+            if livro.nome.lower() == nome.lower():
+                self.emprestados.remove(livro)
+                self.disponiveis.append(livro)
                 print('Livro removido com sucesso!!')
                 self._salvar_json()
-            else:
-                print(
-                    'Digite um indice valido, se você não sabe digite V para ver os livros e os indices'
-                )
-        else:
-            print(
-                'Ainda não tem livros disponiveis para remover, tente adicionar um antes!!!'
-            )
+            return
+        print('Livro não encontrado!')
+
+    def removerLivro(self, nome):
+        for livro in self.disponiveis:
+            if livro.nome.lower() == nome.lower():
+                self.disponiveis.remove(livro)
+                print('Livro removido com sucesso!!')
+                self._salvar_json()
+            return
+
+    print('Livro não encontrado!')
 
 
 def main():
@@ -141,45 +127,52 @@ def main():
 
     while True:
         oque_fazer = input(
-            'Você deseja [R]egistrar um livro? [V]er os livros disponiveis? [E]mprestar um livro? [Q]auis livros você pegou emprestado? [D]evolver um livro? '
+            'Você deseja [A]dicionar um livro? [V]er os livros disponiveis? [E]mprestar um livro? [Q]auis livros você pegou emprestado? [D]evolver um livro? [R]emover um livro?  '
         ).upper()
 
-        if oque_fazer == 'R':
-            nome = input('Digite o nome do livro: ')
-            genero = input('Digite o genero do livro: ')
-            autor = input('Digite o nome do autor do livro: ')
-            anoPublicado = int(input('Digite o ano de publicação do livro: '))
+        match oque_fazer:
+            case 'A':
+                try:
+                    nome = str(input('Digite o nome do livro: '))
+                    genero = str(input('Digite o genero do livro: '))
+                    autor = str(input('Digite o nome do autor: '))
+                    anoPublicado = int(input('Digite o ano de publicação do livro: '))
+                    biblioteca.registarLivro(nome, genero, autor, anoPublicado)
+                except ValueError:
+                    print(
+                        'Digite o ano de publicação ou um texto nos campos de nome, genero e autor '
+                    )
 
-            try:
-                biblioteca.registarLivro(nome, genero, autor, anoPublicado)
-                print('Livro registrado com sucesso')
-            except ValueError:
-                print('Digite o ano de publicação, não um texto!!!')
+            case 'V':
+                biblioteca.verLivros()
 
-        elif oque_fazer == 'V':
-            biblioteca.verLivros()
+            case 'E':
+                try:
+                    indice = int(input('Digite o indice do livro: '))
+                    biblioteca.emprestar(indice)
+                except ValueError:
+                    print('Digite um numero (indice), não um texto!!')
 
-        elif oque_fazer == 'E':
-            indice = int(
-                input('Digite o indice do livro que deseja pegar emprestado: ')
-            )
-            try:
-                biblioteca.emprestar(indice)
-            except ValueError:
-                print(
-                    'Digite o indice do livro que deseja pegar emprestado, não um texto!!!'
-                )
+            case 'Q':
+                biblioteca.livrosEmprestados()
 
-        elif oque_fazer == 'Q':
-            biblioteca.livrosEmprestados()
+            case 'D':
+                try:
+                    indice2 = int(
+                        input('Digite o indice do livro que deseja devolver: ')
+                    )
+                    biblioteca.devolverLivro(indice2)
+                except ValueError:
+                    print('Por favor, digite um número (indice), não um texto!!!')
 
-        elif oque_fazer == 'D':
-            indice2 = int(input('Digite o indice do livro que voce deseja devolver: '))
-            try:
-                biblioteca.devolverLivro(indice2)
-            except ValueError:
-                print('Digite um indice, não um texto!!!')
-
+            case 'R':
+                try:
+                    indice3 = int(
+                        input('Digite o indice do livro que você deseja remover: ')
+                    )
+                    biblioteca.removerLivro(indice3)
+                except ValueError:
+                    print('Digite um número (indice), não um texto!!!')
         print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
         if pergunta != 'S':
