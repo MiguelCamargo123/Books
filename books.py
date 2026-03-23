@@ -148,31 +148,31 @@ def main():
 
             case 'E':
                 try:
-                    indice = int(input('Digite o indice do livro: '))
-                    biblioteca.emprestar(indice)
+                    nome1 = str(input('Digite o nome do livro do livro: '))
+                    biblioteca.emprestar(nome1)
                 except ValueError:
-                    print('Digite um numero (indice), não um texto!!')
+                    print('Digite um texto (nome do livro), não um número!!')
 
             case 'Q':
                 biblioteca.livrosEmprestados()
 
             case 'D':
                 try:
-                    indice2 = int(
-                        input('Digite o indice do livro que deseja devolver: ')
-                    )
-                    biblioteca.devolverLivro(indice2)
+                    nome2 = int(input('Digite o nome do livro que deseja devolver: '))
+                    biblioteca.devolverLivro(nome2)
                 except ValueError:
-                    print('Por favor, digite um número (indice), não um texto!!!')
+                    print(
+                        'Por favor, digite um texto (nome do livro), não um número!!!'
+                    )
 
             case 'R':
                 try:
-                    indice3 = int(
-                        input('Digite o indice do livro que você deseja remover: ')
+                    nome3 = str(
+                        input('Digite o nome do livro que você deseja remover: ')
                     )
-                    biblioteca.removerLivro(indice3)
+                    biblioteca.removerLivro(nome3)
                 except ValueError:
-                    print('Digite um número (indice), não um texto!!!')
+                    print('Digite um texto (nome), não um numero!!!')
         print()
         pergunta = input('Você deseja continuar? (S/N) ').upper()
         if pergunta != 'S':
